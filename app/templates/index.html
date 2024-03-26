@@ -1,0 +1,142 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Cedric Annonce</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">   
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link  rel="stylesheet" href="{% static 'css/style.css' %}" >
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+       
+        </div>
+        <div class="row align-items-center py-2 px-lg-5">
+            <div class="col-lg-4">
+                <a href="" class="navbar-brand d-none d-lg-block">
+                    <h1 class="m-0 display-5 text-uppercase"><span class="text-info">Cedric Annonce</span></h1>
+                </a>
+            </div>
+           
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid p-0 mb-3">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0 px-lg-5">
+            {% if user.is_authenticated %}
+
+            <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
+                <div class="navbar-nav mr-auto py-0">
+                    <a href="{% url 'index' %}" class="nav-item btn btn-info">Home</a>
+                    {% if user.is_superuser %}
+                    <a href="{% url 'review_posts' %}" class="nav-item btn btn-info">Confirmation</a>
+                    {% endif %}
+                    <a href="{% url 'createpost' %}" class="btn btn-info">Fait une annonce</a>
+                    {% if user.is_authenticated %}
+                    <h6>Bienvenue, {{ user.username}} </h6>
+                    {% endif %}
+                   
+                </div>
+
+                <div class="input-group ml-auto" style="width: 100%; max-width: 300px;">
+                    <a href="{% url 'logout' %}" class="btn btn-outline-info mx-3 mt-2 d-block"> Se Deconnecter</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+           
+           
+            <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
+                <div class="navbar-nav mr-auto py-0">
+                    <a href="{% url 'index' %}" class="btn btn-info">Home</a>
+                    <a href="{% url 'login' %}" class="btn btn-info">Connexion</a>
+                    <a href="{% url 'register' %}" class="btn btn-info">Inscription</a>
+
+                </div>
+
+               
+            </div>
+            {% endif %}
+
+
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Featured News Slider Start -->
+    <div class="container-fluid py-3">
+        <div class="container">
+           <div class="d-flex align-items-center justify-content-between bg-light py-2 px-4 mb-3">
+              
+                 <h3 class="text-info font-weight-medium text-decoration-none" href="">Les annonces disponible</h3>
+            </div>
+    
+            <div class="owl-carousel owl-carousel-2 carousel-item-4 position-relative">
+                {% for post in approved_posts %}
+                <div class="position-relative overflow-hidden" style="height: 300px;">
+                    {% if post.image %}
+                    <img class="img-fluid w-100 h-100" src="{{ post.image.url }}" style="object-fit: cover;">
+                    {% endif %}
+                    <div class="overlay">
+                        <div class="mb-1" style="font-size: 13px;">
+                            <a class="text-white" href="{% url 'single' post.id %}">{{ post.category }}</a>
+                            <span class="px-1 text-white">/</span>
+                            <a class="text-white" href="{% url 'single' post.id %}">{{ post.created_at }}</a>
+                        </div>
+                        <a class="h4 m-0 text-white" href="{% url 'single' post.id %}">{{ post.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+    
+        </div>
+    </div>
+    
+                   
+    
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-dark back-to-top"><i class="fa fa-angle-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+  
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
